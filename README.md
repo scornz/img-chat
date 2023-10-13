@@ -25,6 +25,51 @@
 
 > A small web app.
 
+# AI Conversational Image Generation Tool
+
+## Introduction
+
+Our study aims to bridge the gap between AI image generation and its users, making the process more accessible and intuitive. Building upon the theories of shared context and repair strategies, we've implemented a conversational UI to assist users, making AI collaboration feel as natural as human-to-human interaction.
+
+## Implementation
+
+### Frontend
+
+- **Framework**: SPA using React and Typescript.
+- **Package Manager**: Yarn
+- **Deployment**: GitHub Pages
+- **Routing**: Three main pages:
+  - **/#/onboard**: Introduction and user guide.
+  - **/#/chat**: Main chat interface.
+  - **/#/help**: Information, tips, and misc details about the project.
+
+#### Key Packages:
+
+- **recoil**: Global state management.
+- **chakra-ui**: Component library.
+- **emotion**: CSS shorthand styling for components.
+- **framer-motion**: Animation library.
+
+### Backend
+
+- **Framework**: Flask
+
+#### API Endpoints:
+
+- **/chat**: GPT-3.5 requests
+- **/image**: DALL-E 2 image gen requests.
+
+### Deployment
+
+- **Frontend**: GitHub Pages
+- **Backend**: AWS Elastic Beanstalk
+
+## Usage
+
+1. **/#/onboard**: Start here to understand the purpose and get a quick tutorial.
+2. **/#/chat**: Engage in a chat-like interface to generate images.
+3. **/#/help**: Reach out for tips or to learn more about the project.
+
 ## License
 
 This project is [MIT](https://github.com/scornz/img-chat/blob/main/LICENSE) licensed.
