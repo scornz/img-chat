@@ -4,16 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
 python-dotenv = "*"
 openai = "*"
 mypy = "*"
 flask-cors = "*"
-mongoengine = "*"
 mongo-types = "*"
 boto3 = "*"
 botocore-stubs = "*"
 boto3-stubs = {extras = ["essential"], version = "*"}
+flask-mongoengine = "*"
+flask = "==2.2.5"
 
 [dev-packages]
 black = "*"
