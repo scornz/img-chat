@@ -8,6 +8,7 @@ flask = "*"
 python-dotenv = "*"
 openai = "*"
 mypy = "*"
+flask-cors = "*"
 
 [dev-packages]
 black = "*"
