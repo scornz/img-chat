@@ -13,7 +13,7 @@ mongoengine = "*"
 mongo-types = "*"
 boto3 = "*"
 botocore-stubs = "*"
-boto3-stubs = "*"
+boto3-stubs = {extras = ["essential"], version = "*"}
 
 [dev-packages]
 black = "*"
