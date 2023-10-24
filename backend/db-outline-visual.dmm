@@ -1,6 +1,404 @@
 {
-	"tables": {},
-	"relations": {},
+	"tables": {
+		"edf2fd5f-467b-4c3d-89ff-38927ed2ff37": {
+			"id": "edf2fd5f-467b-4c3d-89ff-38927ed2ff37",
+			"visible": true,
+			"name": "messages",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "e01a2559-3336-4d55-a183-c70b9db8de2b",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "e5061402-fd44-4a68-b9a5-3282f6cc3579",
+					"name": "chat_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": "",
+					"fk": true
+				},
+				{
+					"id": "7eebf160-72f1-4e09-b484-6734bce407f0",
+					"name": "type",
+					"datatype": "enum",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "The type of message, ",
+					"data": "",
+					"enum": "text,image",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "b421395c-eb69-4c23-8a06-8bd04e557d8b",
+					"name": "sender",
+					"datatype": "enum",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "The origin of this message, either from the user or from the AI.",
+					"data": "",
+					"enum": "user,ai",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "019770ba-faa7-4193-ba27-a020e793c88d",
+					"name": "text",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "2c795428-8cd2-43dc-b365-9aa244ed798a",
+					"name": "timestamp",
+					"datatype": "timestamp",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "e1b37006-fcd6-4e50-96f5-33023a3e9c2a",
+					"name": "image_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": "",
+					"fk": true
+				}
+			],
+			"relations": [
+				"1a723a90-bef5-46c5-8388-b3f627678daf",
+				"6d0a7675-a827-4b4b-90cf-aa6cc9af91fd"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "b8e4fa03-c140-4088-9ecd-d5bcc9815d85",
+					"name": "Primary",
+					"isPk": true,
+					"cols": [
+						{
+							"id": "1ea6dba1-c7ae-4a2c-bc5e-54392d6cb84f",
+							"colid": "e01a2559-3336-4d55-a183-c70b9db8de2b"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": "",
+			"beforeScript": "",
+			"afterScript": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": "",
+			"size": "",
+			"max": "",
+			"validation": "",
+			"capped": false
+		},
+		"d25ccfe4-f951-41e2-ae2c-5bc5b03c4006": {
+			"id": "d25ccfe4-f951-41e2-ae2c-5bc5b03c4006",
+			"visible": true,
+			"name": "chats",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2dd8f8a8-9ef2-47c0-9ead-8ec4977c5786",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": "",
+					"fk": false
+				},
+				{
+					"id": "bf6a2194-f8ab-489a-8d8f-8fba786e7ae1",
+					"name": "timestamp",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": "",
+					"fk": false
+				},
+				{
+					"id": "16e92a90-62a0-483f-bea2-017ef49ab509",
+					"name": "num_messages",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				}
+			],
+			"relations": [
+				"1a723a90-bef5-46c5-8388-b3f627678daf"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "abaf0bfb-7192-43d9-86cc-ebcadd9d7b73",
+					"name": "Primary",
+					"isPk": true,
+					"cols": []
+				},
+				{
+					"id": "759111dd-c527-4619-80f5-e77a3dc0ee9c",
+					"isPk": false,
+					"name": "chats_ai_1",
+					"cols": [
+						{
+							"id": "fc0accb9-0c63-4e57-8b09-b937dee5fb05",
+							"colid": "2dd8f8a8-9ef2-47c0-9ead-8ec4977c5786"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": "",
+			"beforeScript": "",
+			"afterScript": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": "",
+			"size": "",
+			"max": "",
+			"validation": "",
+			"capped": false
+		},
+		"3253fbe2-5de9-47d9-9125-2b1b3a757f7c": {
+			"id": "3253fbe2-5de9-47d9-9125-2b1b3a757f7c",
+			"visible": true,
+			"name": "images",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "70bf7ec4-1fb3-4799-89f5-46f9cfdc3d32",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "a577c939-6f0d-4fbb-8c2e-88aac12c888b",
+					"name": "s3_image",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				},
+				{
+					"id": "ecc0af73-b079-41da-b4b0-c83d1ff7baf9",
+					"name": "timestamp",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
+				}
+			],
+			"relations": [
+				"6d0a7675-a827-4b4b-90cf-aa6cc9af91fd"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "3a58b4f9-1211-421d-8d7b-ea7fe1425089",
+					"name": "Primary",
+					"isPk": true,
+					"cols": [
+						{
+							"id": "2b81baed-87ec-46b0-822c-813e2915fa04",
+							"colid": "70bf7ec4-1fb3-4799-89f5-46f9cfdc3d32"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": "",
+			"beforeScript": "",
+			"afterScript": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": "",
+			"size": "",
+			"max": "",
+			"validation": "",
+			"capped": false
+		}
+	},
+	"relations": {
+		"1a723a90-bef5-46c5-8388-b3f627678daf": {
+			"id": "1a723a90-bef5-46c5-8388-b3f627678daf",
+			"visible": true,
+			"name": "_id_chat_id",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "759111dd-c527-4619-80f5-e77a3dc0ee9c",
+			"parent": "d25ccfe4-f951-41e2-ae2c-5bc5b03c4006",
+			"child": "edf2fd5f-467b-4c3d-89ff-38927ed2ff37",
+			"c_mp": "true",
+			"c_mch": "false",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "17efcc0b-48f8-40d1-a68e-dbdbcd34e502",
+					"parentcol": "2dd8f8a8-9ef2-47c0-9ead-8ec4977c5786",
+					"childcol": "e5061402-fd44-4a68-b9a5-3282f6cc3579"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": "",
+			"relationColor": "transparent"
+		},
+		"6d0a7675-a827-4b4b-90cf-aa6cc9af91fd": {
+			"id": "6d0a7675-a827-4b4b-90cf-aa6cc9af91fd",
+			"visible": true,
+			"name": "_id_image_id",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "3a58b4f9-1211-421d-8d7b-ea7fe1425089",
+			"parent": "3253fbe2-5de9-47d9-9125-2b1b3a757f7c",
+			"child": "edf2fd5f-467b-4c3d-89ff-38927ed2ff37",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "one",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "6676f179-5605-4b9f-bd7f-ab7c49cd3590",
+					"parentcol": "70bf7ec4-1fb3-4799-89f5-46f9cfdc3d32",
+					"childcol": "e1b37006-fcd6-4e50-96f5-33023a3e9c2a"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": "",
+			"relationColor": "transparent"
+		}
+	},
 	"notes": {},
 	"lines": {},
 	"model": {
@@ -35,7 +433,8 @@
 		"def_validationLevel": "na",
 		"def_validationAction": "na",
 		"def_collation": "",
-		"def_others": ""
+		"def_others": "",
+		"lastSaved": 1698158728165
 	},
 	"otherObjects": {},
 	"diagrams": {
@@ -50,7 +449,47 @@
 			"lineColor": "transparent",
 			"isOpen": true,
 			"main": true,
-			"diagramItems": {},
+			"diagramItems": {
+				"edf2fd5f-467b-4c3d-89ff-38927ed2ff37": {
+					"referencedItemId": "edf2fd5f-467b-4c3d-89ff-38927ed2ff37",
+					"x": 115,
+					"y": 64,
+					"gHeight": 153,
+					"gWidth": 233,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true,
+					"backgroundOpacity": "10",
+					"collapsed": false
+				},
+				"d25ccfe4-f951-41e2-ae2c-5bc5b03c4006": {
+					"referencedItemId": "d25ccfe4-f951-41e2-ae2c-5bc5b03c4006",
+					"x": 489,
+					"y": 31,
+					"gHeight": 81,
+					"gWidth": 217,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true,
+					"backgroundOpacity": "10",
+					"collapsed": false
+				},
+				"3253fbe2-5de9-47d9-9125-2b1b3a757f7c": {
+					"referencedItemId": "3253fbe2-5de9-47d9-9125-2b1b3a757f7c",
+					"x": 492,
+					"y": 172,
+					"gHeight": 81,
+					"gWidth": 207,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true,
+					"backgroundOpacity": "10",
+					"collapsed": false
+				}
+			},
 			"scroll": {
 				"x": 0,
 				"y": 0

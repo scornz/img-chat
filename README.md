@@ -23,9 +23,7 @@
   </a>
 </p>
 
-> A small web app.
-
-# AI Conversational Image Generation Tool
+> An AI conversational image generation tool created for Human-Computer Interaction (COS436) at Princeton University, in F'23.
 
 ## Introduction
 
@@ -53,11 +51,16 @@ Our study aims to bridge the gap between AI image generation and its users, maki
 ### Backend
 
 - **Framework**: Flask
+- **Database**: MongoDB
 
-#### API Endpoints:
+### API Endpoints:
 
 - **/chat**: GPT-3.5 requests
 - **/image**: DALL-E 2 image gen requests.
+
+### Database Model
+
+<img src="https://i.ibb.co/QjvWz8X/Screenshot-2023-10-24-at-11-13-21-AM.png" alt="basic modeling of MongoDB deployment" height="200"/>
 
 ### Deployment
 
