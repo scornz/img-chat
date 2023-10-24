@@ -9,6 +9,11 @@ python-dotenv = "*"
 openai = "*"
 mypy = "*"
 flask-cors = "*"
+mongoengine = "*"
+mongo-types = "*"
+boto3 = "*"
+botocore-stubs = "*"
+boto3-stubs = "*"
 
 [dev-packages]
 black = "*"
