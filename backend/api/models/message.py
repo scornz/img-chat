@@ -10,7 +10,7 @@ from mongoengine.fields import (
 # External
 from datetime import datetime
 from bson.objectid import ObjectId
-from utils.mongo import MongoEnum
+from utils.mongo import MongoEnum, MongoId
 from utils.annotate import QuerySetManager
 
 
@@ -56,3 +56,9 @@ class Message(DynamicDocument):
             {"fields": ["chat_id", "-id"], "name": "new"},
         ],
     }
+
+
+def query_messages_by_chat(chat_id: MongoId):
+    """Return the entire series of sent/received messages for a given chat."""
+    query = Message.objects(chat_id=chat_id)
+    return query

@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Set, Type
 
+from utils.mongo import MongoId
+
 from .http import (
     HttpBadRequest,
     HttpConflict,
@@ -21,6 +23,26 @@ from werkzeug.exceptions import InternalServerError, HTTPException
 #     def __init__(self, msg: str):
 #         message = f"Test: {msg}."
 #         super().__init__(message)
+
+
+class ChatNotFoundException(Exception):
+    """
+    The requested chat does not exist.
+    """
+
+    def __init__(self, chat_id: MongoId):
+        message = f"The chat with ID {chat_id} could not be found."
+        super().__init__(message)
+
+
+class ImageNotFoundException(Exception):
+    """
+    The requested image does not exist.
+    """
+
+    def __init__(self, image_id: MongoId):
+        message = f"The image with ID {image_id} could not be found."
+        super().__init__(message)
 
 
 _bad_request: Set[Type[Exception]] = set([])

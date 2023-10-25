@@ -8,6 +8,8 @@ from mongoengine.fields import (
 # External
 from datetime import datetime
 from bson.objectid import ObjectId
+from utils.exceptions import ChatNotFoundException
+from utils.mongo import MongoId
 from utils.annotate import QuerySetManager
 
 
@@ -30,3 +32,12 @@ class Chat(DynamicDocument):
         "auto_create_index": False,
         "indexes": [],
     }
+
+
+def query_chat_by_id(chat_id: MongoId):
+    """Return the chat with the given ID."""
+    query = Chat.objects(id=chat_id)
+    if not query:
+        raise ChatNotFoundException(chat_id)
+
+    return query
