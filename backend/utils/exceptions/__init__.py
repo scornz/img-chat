@@ -47,7 +47,7 @@ class ImageNotFoundException(Exception):
 
 _bad_request: Set[Type[Exception]] = set([])
 _conflict: Set[Type[Exception]] = set([])
-_not_found: Set[Type[Exception]] = set([])
+_not_found: Set[Type[Exception]] = set([ChatNotFoundException, ImageNotFoundException])
 _unauthorized: Set[Type[Exception]] = set([])
 _forbidden: Set[Type[Exception]] = set([])
 _too_many_requests: Set[Type[Exception]] = set([])
