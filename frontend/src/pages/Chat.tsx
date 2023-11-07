@@ -1,8 +1,9 @@
 import { Box, Stack, Tabs, TabList, TabPanels, Tab, TabPanel, useColorModeValue } from "@chakra-ui/react";
 import MessageList from "containers/MessageList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageInfo, MessageType, SenderType } from "components/Message";
 import { ChatInput } from "components";
+import axios from "../utils/axiosConfig";
 
 /**
  * Some stupid texting messages used for displaying what a possible frontend
@@ -56,8 +57,28 @@ const TESTING_MESSAGES: Array<MessageInfo> = [
 function Chat() {
   const [messages, setMessages] =
     useState<Array<MessageInfo>>(TESTING_MESSAGES);
-
   let nextId = messages.length + 1;
+
+  const [chatId, setChatId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check if there's a chatId in session storage
+    const storedChatId = sessionStorage.getItem("chatId");
+    if (storedChatId) {
+      setChatId(storedChatId);
+      // TODO: Fetch messages for this chatId from the backend
+    } else {
+      // Call the /start_chat endpoint to start a new chat
+      axios
+        .post("/start_chat")
+        .then((response) => {
+          const newChatId = response.data.chat_id;
+          setChatId(newChatId);
+          sessionStorage.setItem("chatId", newChatId);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  }, []);
 
   // Append a message to the front from the sent user, using the text from input
   const sendMessage = (input: string) => {

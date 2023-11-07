@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Image } from "@chakra-ui/react";
 
 /**
  * Types of messages sent by either user or AI.
@@ -74,7 +74,8 @@ function Message({ message, index = 0 }: Props) {
       display="block"
       {...senderStyle}
     >
-      <Text>{message.content}</Text>
+      {message.type === MessageType.TEXT && <Text>{message.content}</Text>}
+      {message.type === MessageType.IMAGE && <Image src={message.content} alt="Message content" borderRadius="xl" />}
     </Box>
   );
 }
