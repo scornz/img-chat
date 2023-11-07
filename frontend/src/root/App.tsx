@@ -12,6 +12,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 // Pages
 import Chat from "pages/Chat";
+import Prompt from "pages/Prompt";
 
 /* We use a hash router to take advantage of GitHub pages. GitHub pages uses
 server-side routing, so we need this. */
@@ -26,6 +27,10 @@ const router = createHashRouter([
       {
         path: "/chat",
         element: <Chat />,
+      },
+      {
+        path: "/prompt",
+        element: <Prompt />,
       },
     ],
     errorElement: <Navigate to="/chat" />,

@@ -3,7 +3,6 @@ from flask_cors import CORS
 from api.routes import register_routes
 
 # Modules
-import api.openai
 from api.db import db
 from api.config import Config
 

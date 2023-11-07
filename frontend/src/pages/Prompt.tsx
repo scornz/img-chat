@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Box, Stack } from "@chakra-ui/react";
 import MessageList from "containers/MessageList";
 import { useEffect, useState } from "react";
@@ -6,45 +8,14 @@ import { ChatInput } from "components";
 import axios from "../utils/axiosConfig";
 
 /**
- * Some stupid texting messages used for displaying what a possible frontend
- * could look like. These are non-functional and will be removed.
- *
- * TODO: Delete this.
+ * TODO: Improve this.
  */
 const TESTING_MESSAGES: Array<MessageInfo> = [
   {
     id: 0,
     type: MessageType.TEXT,
-    sender: SenderType.USER,
-    content: "Testing 1",
-    loading: false,
-  },
-  {
-    id: 1,
-    type: MessageType.TEXT,
     sender: SenderType.AI,
-    content: "Testing 12",
-    loading: false,
-  },
-  {
-    id: 2,
-    type: MessageType.TEXT,
-    sender: SenderType.USER,
-    content: "Testing 123",
-    loading: false,
-  },
-  {
-    id: 3,
-    type: MessageType.TEXT,
-    sender: SenderType.USER,
-    content: "Testing 1234",
-    loading: false,
-  },
-  {
-    id: 4,
-    type: MessageType.TEXT,
-    sender: SenderType.AI,
-    content: "Testing 12345",
+    content: "Enter the image you would like to generate",
     loading: false,
   },
 ];
@@ -54,7 +25,7 @@ const TESTING_MESSAGES: Array<MessageInfo> = [
  * chat interface, allowing them to send and receive messages with a
  * AI chat bot, oriented around generating prompts for images.
  */
-function Chat() {
+function Prompt() {
   const [messages, setMessages] =
     useState<Array<MessageInfo>>(TESTING_MESSAGES);
   let nextId = messages.length + 1;
@@ -92,6 +63,34 @@ function Chat() {
     nextId += 1;
 
     setMessages((prev) => [info, ...prev]);
+
+    axios
+      .post("/test_generate_image", { prompt: input })
+      .then((response) => {
+        const newMessage: MessageInfo = {
+          id: nextId,
+          type: MessageType.IMAGE,
+          sender: SenderType.AI,
+          loading: false,
+          content: response.data.image_url,
+        };
+        nextId += 1;
+
+        setMessages((prev) => [newMessage, ...prev]);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        const errorMessage: MessageInfo = {
+          id: nextId,
+          type: MessageType.TEXT,
+          sender: SenderType.AI,
+          loading: false,
+          content: "Image generation failed.",
+        };
+        nextId += 1;
+
+        setMessages((prev) => [errorMessage, ...prev]);
+      });
   };
 
   return (
@@ -116,4 +115,4 @@ function Chat() {
   );
 }
 
-export default Chat;
+export default Prompt;
