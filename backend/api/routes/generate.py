@@ -97,23 +97,22 @@ def continue_conversation():
     if not user_message:
         return jsonify({'error': 'Message is required'}), 400
 
+    # Read in conversation history from client if it exists
     conversation_list = []
-    print(conversation_history)
-    
-    print("\n IN BETWEEN")
     if not conversation_history:
         conversation_list.append({"role": "system", "content": STARTING_PROMPT})
     else:
         conversation_list = json.loads(conversation_history)
     conversation_list.append({"role": "user", "content": user_message})
-    print(conversation_list[1:])
     
+    # Generate new AI response
     chat_response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=conversation_list
     )
     conversation_list.append({"role": "assistant", "content": chat_response.choices[0].message.content})
     
+    # Check if image needs to be created, checks length of chat history to see if NUM_QUESTIONS_CUI have been answered
     if len(conversation_list) >= (NUM_QUESTIONS_CUI * 2) + 2:
         response = client.images.generate(
             model="dall-e-3",
@@ -123,7 +122,6 @@ def continue_conversation():
         )
         
         image_url = response.data[0].url
-        print("DONE")
         return jsonify({'message': 'Image generated successfully', 'image_url': image_url}), 200
     
     else:
