@@ -75,7 +75,6 @@ function Prompt() {
           content: response.data.image_url,
         };
         nextId += 1;
-
         setMessages((prev) => [newMessage, ...prev]);
       })
       .catch((error) => {

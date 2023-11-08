@@ -108,6 +108,7 @@ function Chat() {
       .post("/conversation", { message: input, history: current_history })
       .then((response) => {
         if (response.data.message == 'Image generated successfully') {
+          setHistory("");
           const newMessage: MessageInfo = {
             id: nextId,
             type: MessageType.IMAGE,
@@ -115,7 +116,16 @@ function Chat() {
             loading: false,
             content: response.data.image_url,
           };
+          nextId += 1;
+          const newMessage2: MessageInfo = {
+            id: nextId,
+            type: MessageType.TEXT,
+            sender: SenderType.AI,
+            loading: false,
+            content: "If you would like to enter another prompt feel free"
+          }
           setMessages((prev) => [newMessage, ...prev]);
+          setMessages((prev) => [newMessage2, ...prev]);
         } else {
           setHistory(response.data.updated_history)
           const newMessage: MessageInfo =  {
