@@ -15,7 +15,7 @@ const TESTING_MESSAGES: Array<MessageInfo> = [
     id: 0,
     type: MessageType.TEXT,
     sender: SenderType.AI,
-    content: "Enter the image you would like to generate",
+    content: "Enter a prompt for an image you would like to generate",
     loading: false,
   },
 ];

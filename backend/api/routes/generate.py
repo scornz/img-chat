@@ -2,15 +2,20 @@ from flask import Blueprint, request, jsonify
 from api.models.image import Image
 from api.models.message import Message, MessageType, MessageSenderType
 from api.models.chat import Chat, query_chat_by_id
-from api.openai import openai
+from api.openai import client
 from api.db import db
+import json
 
 generate_bp = Blueprint('generate', __name__)
+
+STARTING_PROMPT = "You are an artist that will be creating an image based on the prompt that the user will input. In order to create your work, you should ask a clarifying question about the user-inputted initial prompt to design a new prompt. After a response from the patron, you should ask another clarifying question about their answer or about the original prompt as if it were a conversation. Only ask one question at a time until you have asked five total clarifying questions (the original prompt doesn't count). Do not ask less than 5. After all 5 questions have been answered, stop asking any more questions. For all intents and purposes, the conversation has ended at this point. Your last responsibility is to respond with a prompt that a computer will read and directly input into DALL-E to generate an image from the user’s descriptions. The entirety of your final message will be inputted to DALL-E. So it is extremely important that you don’t include an itnroduction to the prompt, and just include the standalone prompt. For example, if the prompt was 'A cow grazing in a field', your final response would be exactly that: 'A cow grazing in a field'"
+NUM_QUESTIONS_CUI = 5
 
 @generate_bp.route('/start_chat', methods=['POST'])
 def start_chat():
     """NOTE: This is not yet tested with the db"""
     # Create a new chat
+    print("Please work")
     chat = Chat()
     chat.save()
 
@@ -29,7 +34,7 @@ def generate_image():
         return jsonify({'error': 'Prompt and chat_id are required'}), 400
 
     # Generate the image
-    response = openai.Image.create(
+    response = client.images.generate(
         model="dall-e-3",
         prompt=prompt,
         n=1,
@@ -72,12 +77,54 @@ def test_generate_image():
         return jsonify({'error': 'Prompt is required'}), 400
 
     # Generate the image
-    response = openai.Image.create(
+    response = client.images.generate(
         model="dall-e-3",
         prompt=prompt,
         n=1,
         size="1024x1024"
     )
-    image_url = response['data'][0]['url']
+    image_url = response.data[0].url
 
     return jsonify({'message': 'Image generated successfully', 'image_url': image_url}), 200
+
+@generate_bp.route('/conversation', methods=['POST'])
+def continue_conversation():
+    
+    data = request.get_json()
+    user_message = data.get('message')
+    conversation_history = data.get('history')
+    
+    if not user_message:
+        return jsonify({'error': 'Message is required'}), 400
+
+    conversation_list = []
+    print(conversation_history)
+    
+    print("\n IN BETWEEN")
+    if not conversation_history:
+        conversation_list.append({"role": "system", "content": STARTING_PROMPT})
+    else:
+        conversation_list = json.loads(conversation_history)
+    conversation_list.append({"role": "user", "content": user_message})
+    print(conversation_list[1:])
+    
+    chat_response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=conversation_list
+    )
+    conversation_list.append({"role": "assistant", "content": chat_response.choices[0].message.content})
+    
+    if len(conversation_list) >= (NUM_QUESTIONS_CUI * 2) + 2:
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=chat_response.choices[0].message.content,
+            n=1,
+            size="1024x1024"
+        )
+        
+        image_url = response.data[0].url
+        print("DONE")
+        return jsonify({'message': 'Image generated successfully', 'image_url': image_url}), 200
+    
+    else:
+        return jsonify({'message': chat_response.choices[0].message.content, 'updated_history': json.dumps(conversation_list)})

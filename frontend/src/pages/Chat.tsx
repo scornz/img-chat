@@ -49,6 +49,16 @@ const TESTING_MESSAGES: Array<MessageInfo> = [
   },
 ];
 
+const INITIAL_MESSAGE: Array<MessageInfo> = [
+  {
+    id: 0,
+    type: MessageType.TEXT,
+    sender: SenderType.AI,
+    content: "Enter a prompt for an image you would like to generate",
+    loading: false,
+  }
+];
+
 /**
  * The main interactive page for the app. Presents the user with a familiar
  * chat interface, allowing them to send and receive messages with a
@@ -56,10 +66,11 @@ const TESTING_MESSAGES: Array<MessageInfo> = [
  */
 function Chat() {
   const [messages, setMessages] =
-    useState<Array<MessageInfo>>(TESTING_MESSAGES);
+    useState<Array<MessageInfo>>(INITIAL_MESSAGE);
   let nextId = messages.length + 1;
 
   const [chatId, setChatId] = useState<string | null>(null);
+  const [current_history, setHistory] = useState<string>("");
 
   useEffect(() => {
     // Check if there's a chatId in session storage
@@ -92,14 +103,45 @@ function Chat() {
     nextId += 1;
 
     setMessages((prev) => [info, ...prev]);
-  };
 
-  const bg_colors = useColorModeValue(
-    ['teal.50', 'orange.50', 'purple.50'],
-    ['teal.900', 'orange.900', 'purple.900'],
-  );
-  const [tabIndex, setTabIndex] = useState(0);
-  const bg = bg_colors[tabIndex];
+    axios
+      .post("/conversation", { message: input, history: current_history })
+      .then((response) => {
+        if (response.data.message == 'Image generated successfully') {
+          const newMessage: MessageInfo = {
+            id: nextId,
+            type: MessageType.IMAGE,
+            sender: SenderType.AI,
+            loading: false,
+            content: response.data.image_url,
+          };
+          setMessages((prev) => [newMessage, ...prev]);
+        } else {
+          setHistory(response.data.updated_history)
+          const newMessage: MessageInfo =  {
+            id: nextId,
+            type: MessageType.TEXT,
+            sender: SenderType.AI,
+            content: response.data.message,
+            loading: false,
+          };
+          setMessages((prev) => [newMessage, ...prev]);
+        }
+        nextId += 1;
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        const errorMessage: MessageInfo = {
+          id: nextId,
+          type: MessageType.TEXT,
+          sender: SenderType.AI,
+          loading: false,
+          content: "An error occurred.",
+        };
+        nextId += 1;
+        setMessages((prev) => [errorMessage, ...prev]);
+      });
+  };
 
   return (
     <Stack
@@ -108,7 +150,6 @@ function Chat() {
       mx="auto"
       h="full"
       flexDirection="column"
-      flex="1"
     >
       <MessageList
         width="full"
