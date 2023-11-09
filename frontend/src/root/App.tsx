@@ -1,6 +1,6 @@
 import { RecoilRoot } from "recoil";
 import RecoilNexus from "recoil-nexus";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, redirect, Link, Routes } from "react-router-dom";
 import {
   ChakraProvider,
   Flex,
@@ -21,9 +21,9 @@ function App() {
       <Router>
         <ChakraProvider>
           <Flex direction="column" h="100vh" pt="20px">
-            <Tabs variant="soft-rounded" colorScheme="green">
+            <Tabs variant="soft-rounded" colorScheme="green" pb="20px">
               <TabList justifyContent="center">
-                <Tab as={Link} to="/about">
+                <Tab as={Link} to="/">
                   About
                 </Tab>
                 <Tab as={Link} to="/chat">
@@ -35,9 +35,9 @@ function App() {
               </TabList>
             </Tabs>
 
-            <Box flex="1" width="100%">
+            <Box flex="1" width="100%" height="50vh">
               <Routes>
-                <Route path="/about" element={<Help />} />
+                <Route path="/" element={<Help />} />
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/prompt" element={<Prompt />} />
               </Routes>

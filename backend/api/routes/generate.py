@@ -8,7 +8,8 @@ import json
 
 generate_bp = Blueprint('generate', __name__)
 
-STARTING_PROMPT = "You are an artist that will be creating an image based on the prompt that the user will input. In order to create your work, you should ask a clarifying question about the user-inputted initial prompt to design a new prompt. After a response from the patron, you should ask another clarifying question about their answer or about the original prompt as if it were a conversation. Only ask one question at a time until you have asked five total clarifying questions (the original prompt doesn't count). Do not ask less than 5. After all 5 questions have been answered, stop asking any more questions. For all intents and purposes, the conversation has ended at this point. Your last responsibility is to respond with a prompt that a computer will read and directly input into DALL-E to generate an image from the user’s descriptions. The entirety of your final message will be inputted to DALL-E. So it is extremely important that you don’t include an itnroduction to the prompt, and just include the standalone prompt. For example, if the prompt was 'A cow grazing in a field', your final response would be exactly that: 'A cow grazing in a field'"
+STARTING_PROMPT = "You are an artist that will be creating an image based on the prompt that the user will input. In order to create your work, you should ask a clarifying question about the user-inputted initial prompt to design a new prompt. After a response from the patron, you should acknowledge their answer and ask another clarifying question about their answer or about the original prompt as if it were a conversation. Only ask one question at a time. At some point you will be told to stop asking questions. At this point you should respond with a refined prompt for generating the image."
+FINAL_PROMPT = "Respond with a refined prompt to input to DALL-E for image generation based on the user's previous answers. Start your prompt with 'Please create an image of...'"
 NUM_QUESTIONS_CUI = 5
 
 @generate_bp.route('/start_chat', methods=['POST'])
@@ -105,22 +106,27 @@ def continue_conversation():
         conversation_list = json.loads(conversation_history)
     conversation_list.append({"role": "user", "content": user_message})
     
-    # Generate new AI response
+    if len(conversation_list) == (NUM_QUESTIONS_CUI + 1) * 2:
+        conversation_list.append({"role": "system", "content": FINAL_PROMPT})
+        
     chat_response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=conversation_list
     )
+    print(chat_response.choices[0].message.content)
     conversation_list.append({"role": "assistant", "content": chat_response.choices[0].message.content})
     
+    print("length2", len(conversation_list))
     # Check if image needs to be created, checks length of chat history to see if NUM_QUESTIONS_CUI have been answered
-    if len(conversation_list) >= (NUM_QUESTIONS_CUI * 2) + 2:
+    if len(conversation_list) == (NUM_QUESTIONS_CUI + 1) * 2 + 2:
+        print("Creating photo")
         response = client.images.generate(
             model="dall-e-3",
             prompt=chat_response.choices[0].message.content,
             n=1,
             size="1024x1024"
         )
-        
+            
         image_url = response.data[0].url
         return jsonify({'message': 'Image generated successfully', 'image_url': image_url}), 200
     

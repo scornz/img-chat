@@ -122,7 +122,7 @@ function Chat() {
             type: MessageType.TEXT,
             sender: SenderType.AI,
             loading: false,
-            content: "If you would like to enter another prompt feel free"
+            content: "Enter another prompt if you would like"
           }
           setMessages((prev) => [newMessage, ...prev]);
           setMessages((prev) => [newMessage2, ...prev]);
@@ -141,12 +141,13 @@ function Chat() {
       })
       .catch((error) => {
         console.error("Error:", error);
+        setHistory("");
         const errorMessage: MessageInfo = {
           id: nextId,
           type: MessageType.TEXT,
           sender: SenderType.AI,
           loading: false,
-          content: "An error occurred.",
+          content: "An error occurred. Enter another prompt if you would like",
         };
         nextId += 1;
         setMessages((prev) => [errorMessage, ...prev]);

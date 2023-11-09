@@ -75,7 +75,15 @@ function Prompt() {
           content: response.data.image_url,
         };
         nextId += 1;
+        const newMessage2: MessageInfo = {
+          id: nextId,
+          type: MessageType.TEXT,
+          sender: SenderType.AI,
+          loading: false,
+          content: "Enter another prompt if you would like"
+        }
         setMessages((prev) => [newMessage, ...prev]);
+        setMessages((prev) => [newMessage2, ...prev]);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -84,7 +92,7 @@ function Prompt() {
           type: MessageType.TEXT,
           sender: SenderType.AI,
           loading: false,
-          content: "Image generation failed.",
+          content: "An error occurred. Enter another prompt if you would like",
         };
         nextId += 1;
 
