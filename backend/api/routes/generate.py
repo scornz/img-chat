@@ -8,7 +8,7 @@ import json
 
 generate_bp = Blueprint('generate', __name__)
 
-STARTING_PROMPT = "You are an artist that will be creating an image based on the prompt that the user will input. In order to create your work, you should ask a clarifying question about the user-inputted initial prompt to design a new prompt. After a response from the patron, you should acknowledge their answer and ask another clarifying question about their answer or about the original prompt as if it were a conversation. Only ask one question at a time. At some point you will be told to stop asking questions. At this point you should respond with a refined prompt for generating the image."
+STARTING_PROMPT = "You are an artist that will be creating an image based on the prompt that the user will input. In order to create your work, you should ask a clarifying question about the user-inputted initial prompt to design a new prompt. After a response from the patron, you should acknowledge their answer and ask another clarifying question about their answer or about the original prompt as if it were a conversation. Only ask one question at a time and do not stop asking more clarifying questions."
 FINAL_PROMPT = "Respond with a refined prompt to input to DALL-E for image generation based on the user's previous answers. Start your prompt with 'Please create an image of...'"
 NUM_QUESTIONS_CUI = 5
 
