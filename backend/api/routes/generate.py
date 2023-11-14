@@ -16,7 +16,6 @@ NUM_QUESTIONS_CUI = 3
 def start_chat():
     """NOTE: This is not yet tested with the db"""
     # Create a new chat
-    print("Please work")
     chat = Chat()
     chat.save()
 
